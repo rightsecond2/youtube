@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, List, Avatar } from 'antd';
 import Axios from 'axios';
 import SideVideo from './Sections/SideVideo';
+import Subscribe from './Sections/Subscribe';
 
 function VideoDetailpage(props) {
 
@@ -30,7 +31,8 @@ function VideoDetailpage(props) {
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-                        <List.Item actions>
+                        <List.Item
+                            actions={[<Subscribe userTo={VideoDetail.writer._id} />]}>
                             <List.Item.Meta
                                 avatar={<Avatar src={VideoDetail.writer.image} />}
                                 //image 정보를 가져오기 전에 image 정보를 가져와서 에러가 남. 이미지 정보가 있으면 렌더링 하도록 해야함.
