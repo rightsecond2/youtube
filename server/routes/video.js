@@ -42,6 +42,15 @@ router.post("/uploadfiles", (req, res) => {
 
 });
 
+router.post("/getVideo", (req, res) => {
+    Video.findOne({ "_id": req.body.videoId })
+        .populate('writer') //populate 해주는게 user의 모든 정보를 가져올 수 있음
+        .exec((err, videoDetail) => {
+            if (err) return res.status(400).send(err)
+            return res.status(200).json({ success: true, videoDetail })
+        })
+})
+
 
 router.post("/thumbnail", (req, res) => {
     //썸네일 생성 및 비디오 러닝타임도 가져오기
@@ -84,7 +93,7 @@ router.post("/thumbnail", (req, res) => {
 
 
 router.get("/getVideos", (req, res) => {
-
+    //비디오를 DB에서 가져와서 클라이언트에 보냄
     Video.find()
         .populate('writer')
         .exec((err, videos) => {
@@ -97,7 +106,7 @@ router.get("/getVideos", (req, res) => {
 
 
 router.post("/uploadVideo", (req, res) => {
-
+    //비디오 정보 저장
     const video = new Video(req.body)
 
     video.save((err, video) => {
